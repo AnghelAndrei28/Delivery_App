@@ -1,16 +1,16 @@
+import 'package:delivery_project/View/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:folding_cell/folding_cell.dart';
 
-import 'customer_login_view.dart';
 
 class FrameCustomer extends StatefulWidget {
   _FrameCustomerView createState() => _FrameCustomerView();
 }
 
 class _FrameCustomerView extends State<FrameCustomer> {
-  void _customerPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerLogin()));
+  void _settingsPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsPage()));
   }
 
   @override
@@ -20,7 +20,7 @@ class _FrameCustomerView extends State<FrameCustomer> {
           centerTitle: true,
           title: Text('My Orders'),
           leading: GestureDetector(
-            onTap: _customerPage,
+            onTap: _settingsPage,
             child: Icon(Icons.menu),
           ),
         ),
