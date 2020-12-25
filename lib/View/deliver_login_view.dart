@@ -7,8 +7,7 @@ class DeliverLogin extends StatefulWidget {
 }
 
 class _DeliverLogin extends State<DeliverLogin> {
-
-  void _customerPage(){
+  void _customerPage() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerLogin()));
   }
 
@@ -26,12 +25,14 @@ class _DeliverLogin extends State<DeliverLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF2e282a),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(
           children: [
             Container(
               margin: EdgeInsets.fromLTRB(40, 100, 40, 65),
               decoration: BoxDecoration(
+                color: Color(0xFFffcd3c),
                 border: Border.all(),
               ),
               child: Container(
@@ -41,60 +42,52 @@ class _DeliverLogin extends State<DeliverLogin> {
                     SizedBox(
                         height: 40,
                         child: Text(
-                            'Deliver',
+                          'Deliver',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            fontSize: 30
-                          ),
-                        )
-                    ),
+                              fontWeight: FontWeight.bold, fontSize: 30),
+                        )),
                     Container(
                       padding: const EdgeInsets.only(top: 10),
                       child: Column(children: [
                         TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Username'
-                          ),
+                              labelText: 'Username'),
                           controller: myControllerUser,
                         ),
                         SizedBox(height: 20),
                         TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Password'
-                          ),
+                              labelText: 'Password'),
                           controller: myControllerPass,
                         ),
-                        SizedBox(height: 20),
-                        Container(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black, width: 2)
-                            ),
-                            child: SizedBox(
-                              height: 20,
-                              width: 160,
-                              child: IconButton(
-                                onPressed: () {
-                                  return showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        // Retrieve the text the user has entered by using the
-                                        // TextEditingController.
-                                        content: Text(myControllerUser.text +
-                                            '  ' +
-                                            myControllerPass.text),
-                                      );
-                                    },
+                        SizedBox(height: 30),
+                        SizedBox(
+                          height: 30,
+                          width: 160,
+                          child: FlatButton(
+                            textColor: Colors.white,
+                            color: Colors.indigoAccent,
+                            splashColor: Colors.white.withOpacity(0.5),
+                            onPressed: () {
+                              return showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    // Retrieve the text the user has entered by using the
+                                    // TextEditingController.
+                                    content: Text(myControllerUser.text +
+                                        '  ' +
+                                        myControllerPass.text),
                                   );
                                 },
-                                tooltip: 'Show me the value!',
-                                icon: Icon(Icons.arrow_forward),
-                              ),
-                            )
+                              );
+                            },
+                            child: Icon(Icons.arrow_forward),
+                          ),
                         ),
+                        SizedBox(height: 30),
                       ]),
                     ),
                   ],
@@ -105,7 +98,10 @@ class _DeliverLogin extends State<DeliverLogin> {
         ),
         Container(
             padding: const EdgeInsets.only(bottom: 60),
-            child: RaisedButton(
+            child: FlatButton(
+              textColor: Colors.white,
+              color: Colors.indigoAccent,
+              splashColor: Colors.white.withOpacity(0.5),
               child: Text('Log In as Customer'),
               onPressed: _customerPage,
             ))

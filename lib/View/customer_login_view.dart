@@ -1,5 +1,6 @@
 import 'package:delivery_project/View/deliver_login_view.dart';
 import 'package:delivery_project/View/frame_customer.dart';
+import 'package:delivery_project/View/register_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,10 @@ class _CustomerLogin extends State<CustomerLogin> {
     Navigator.push(context, MaterialPageRoute(builder: (_) => FrameCustomer()));
   }
 
+  void _registerPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerRegister()));
+  }
+
   final myControllerUser = TextEditingController();
   final myControllerPass = TextEditingController();
 
@@ -30,12 +35,14 @@ class _CustomerLogin extends State<CustomerLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF2e282a),
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Column(
           children: [
             Container(
               margin: EdgeInsets.fromLTRB(40, 100, 40, 65),
               decoration: BoxDecoration(
+                color: Color(0xFFffcd3c),
                 border: Border.all(),
               ),
               child: Container(
@@ -45,13 +52,18 @@ class _CustomerLogin extends State<CustomerLogin> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        RaisedButton(
+                        FlatButton(
                           child: Text("Sign In"),
-                          onPressed: null,
+                          textColor: Colors.white,
+                          color: Colors.indigoAccent,
+                          splashColor: Colors.white.withOpacity(0.5),
                         ),
-                        RaisedButton(
+                        FlatButton(
                           child: Text("Sign Up"),
-                          onPressed: null,
+                          onPressed: _registerPage,
+                          textColor: Colors.white,
+                          color: Colors.indigoAccent,
+                          splashColor: Colors.white.withOpacity(0.5),
                         )
                       ],
                     ),
@@ -71,16 +83,14 @@ class _CustomerLogin extends State<CustomerLogin> {
                               labelText: 'Password'),
                           controller: myControllerPass,
                         ),
-                        SizedBox(height: 20),
-                        Container(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 2)),
-                            child: SizedBox(
-                              height: 20,
+                        SizedBox(height: 30),
+                        SizedBox(
+                              height: 30,
                               width: 160,
-                              child: IconButton(
+                              child: FlatButton(
+                                textColor: Colors.white,
+                                color: Colors.indigoAccent,
+                                splashColor: Colors.white.withOpacity(0.5),
                                 onPressed: () {
                                   return showDialog(
                                     context: context,
@@ -126,10 +136,10 @@ class _CustomerLogin extends State<CustomerLogin> {
                                     },
                                   );
                                 },
-                                tooltip: 'Show me the value!',
-                                icon: Icon(Icons.arrow_forward),
+                                child: Icon(Icons.arrow_forward),
                               ),
-                            )),
+                            ),
+                        SizedBox(height: 30),
                       ]),
                     ),
                   ],
@@ -139,8 +149,11 @@ class _CustomerLogin extends State<CustomerLogin> {
           ],
         ),
         Container(
-            padding: const EdgeInsets.only(bottom: 60),
-            child: RaisedButton(
+            padding: const EdgeInsets.only(bottom: 50),
+            child: FlatButton(
+              textColor: Colors.white,
+              color: Colors.indigoAccent,
+              splashColor: Colors.white.withOpacity(0.5),
               child: Text('Log In as Deliver'),
               onPressed: _deliverPage,
             ))

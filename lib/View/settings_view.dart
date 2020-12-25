@@ -3,6 +3,8 @@ import 'package:delivery_project/View/frame_customer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'add_order_view.dart';
+
 class SettingsPage extends StatefulWidget {
   _SettingsPageView createState() => _SettingsPageView();
 }
@@ -14,6 +16,10 @@ class _SettingsPageView extends State<SettingsPage> {
 
   void _logInPage() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerLogin()));
+  }
+
+  void _addOrderPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => AddOrder()));
   }
 
   @override
@@ -52,7 +58,7 @@ class _SettingsPageView extends State<SettingsPage> {
                       textColor: Colors.white,
                       color: Colors.indigoAccent,
                       splashColor: Colors.white.withOpacity(0.5),
-                      onPressed: () {},
+                      onPressed: _addOrderPage
                     )),
                 SizedBox(height: 20),
                 SizedBox(
