@@ -1,35 +1,27 @@
-import 'package:delivery_project/View/settings_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:folding_cell/folding_cell.dart';
 
 
-class FrameCustomer extends StatefulWidget {
-  _FrameCustomerView createState() => _FrameCustomerView();
+class FrameDeliver extends StatefulWidget {
+  _FrameDeliverView createState() => _FrameDeliverView();
 }
 
-class _FrameCustomerView extends State<FrameCustomer> {
-  void _settingsPage() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => SettingsPage()));
-  }
+class _FrameDeliverView extends State<FrameDeliver> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text('My Orders'),
-          leading: GestureDetector(
-            onTap: _settingsPage,
-            child: Icon(Icons.menu),
-          ),
+          title: Text('Orders'),
         ),
         body: CustomScrollView(
           slivers: <Widget>[
             SliverFixedExtentList(
               itemExtent: 300.0,
               delegate:
-                  SliverChildBuilderDelegate((BuildContext context, int index) {
+              SliverChildBuilderDelegate((BuildContext context, int index) {
                 return Material(
                   child: FoldingCellSimpleDemo(),
                 );
@@ -88,24 +80,20 @@ class FoldingCellSimpleDemo extends StatelessWidget {
               SizedBox(height: 30),
               Container(
                   child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FlatButton(
-                    child: Icon(Icons.delete),
-                    onPressed: () {},
-                  ),
-                  FlatButton(
-                    onPressed: () =>
-                        _foldingCellKey?.currentState?.toggleFold(),
-                    child: Text(
-                      "OPEN",
-                    ),
-                    textColor: Colors.white,
-                    color: Colors.indigoAccent,
-                    splashColor: Colors.white.withOpacity(0.5),
-                  ),
-                ],
-              ))
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FlatButton(
+                        onPressed: () =>
+                            _foldingCellKey?.currentState?.toggleFold(),
+                        child: Text(
+                          "OPEN",
+                        ),
+                        textColor: Colors.white,
+                        color: Colors.indigoAccent,
+                        splashColor: Colors.white.withOpacity(0.5),
+                      ),
+                    ],
+                  ))
             ],
           ),
         ));
@@ -131,7 +119,7 @@ class FoldingCellSimpleDemo extends StatelessWidget {
           Container(
             child: Text('Delivery Details'),
           ),
-          SizedBox(height: 55),
+          SizedBox(height: 35),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             alignment: Alignment.center,
@@ -140,26 +128,26 @@ class FoldingCellSimpleDemo extends StatelessWidget {
           SizedBox(height: 50),
           Container(
               child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              FlatButton(
-                child: Text("Postpone"),
-                onPressed: () {},
-                textColor: Colors.white,
-                color: Colors.indigoAccent,
-                splashColor: Colors.white.withOpacity(0.5),
-              ),
-              FlatButton(
-                onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
-                child: Text(
-                  "Close",
-                ),
-                textColor: Colors.white,
-                color: Colors.indigoAccent,
-                splashColor: Colors.white.withOpacity(0.5),
-              ),
-            ],
-          ))
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FlatButton(
+                    child: Text("Finish"),
+                    onPressed: () {},
+                    textColor: Colors.white,
+                    color: Colors.indigoAccent,
+                    splashColor: Colors.white.withOpacity(0.5),
+                  ),
+                  FlatButton(
+                    onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+                    child: Text(
+                      "Close",
+                    ),
+                    textColor: Colors.white,
+                    color: Colors.indigoAccent,
+                    splashColor: Colors.white.withOpacity(0.5),
+                  ),
+                ],
+              ))
         ],
       ),
     );
@@ -193,42 +181,45 @@ class FoldingCellSimpleDemo extends StatelessWidget {
       ],
     );
   }
-    Column _buildInnerDetails(String labelCode, String labelStatus, String labelPhone) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              labelCode,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
+  Column _buildInnerDetails(String labelHour, String labelAdress, String labelPhone) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: FlatButton(
+          child: Text(
+            labelHour,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              labelStatus,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
+            onPressed: () {},
+        ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 3),
+          child: Text(
+            labelAdress,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              labelPhone,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            labelPhone,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
             ),
           ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
+  }
 }

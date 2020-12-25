@@ -1,4 +1,5 @@
 import 'package:delivery_project/View/customer_login_view.dart';
+import 'package:delivery_project/View/frame_deliver_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,10 @@ class DeliverLogin extends StatefulWidget {
 class _DeliverLogin extends State<DeliverLogin> {
   void _customerPage() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerLogin()));
+  }
+
+  void _deliverPage() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) => FrameDeliver()));
   }
 
   final myControllerUser = TextEditingController();
@@ -70,20 +75,7 @@ class _DeliverLogin extends State<DeliverLogin> {
                             textColor: Colors.white,
                             color: Colors.indigoAccent,
                             splashColor: Colors.white.withOpacity(0.5),
-                            onPressed: () {
-                              return showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    // Retrieve the text the user has entered by using the
-                                    // TextEditingController.
-                                    content: Text(myControllerUser.text +
-                                        '  ' +
-                                        myControllerPass.text),
-                                  );
-                                },
-                              );
-                            },
+                            onPressed: _deliverPage,
                             child: Icon(Icons.arrow_forward),
                           ),
                         ),
