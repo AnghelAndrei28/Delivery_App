@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:folding_cell/folding_cell.dart';
 
-
 class FrameCustomer extends StatefulWidget {
   _FrameCustomerView createState() => _FrameCustomerView();
 }
@@ -17,6 +16,7 @@ class _FrameCustomerView extends State<FrameCustomer> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xFFffcd3c),
           centerTitle: true,
           title: Text('My Orders'),
           leading: GestureDetector(
@@ -64,13 +64,16 @@ class FoldingCellSimpleDemo extends StatelessWidget {
 
   Widget _buildFrontWidget() {
     Widget frontDetails = Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildFrontDetails('Code :', 'Status :'),
-          _buildFrontDetails('RB35536346378', 'Active'),
-        ],
-      ),
+      child: Column(children: [
+        SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildFrontDetails('Code :', 'Status :'),
+            _buildFrontDetails('RB35536346378', 'Active'),
+          ],
+        ),
+      ]),
     );
 
     return Container(
@@ -85,7 +88,7 @@ class FoldingCellSimpleDemo extends StatelessWidget {
                 alignment: Alignment.center,
                 child: frontDetails,
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 20),
               Container(
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -117,7 +120,8 @@ class FoldingCellSimpleDemo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildInnerDetails('Ora :', 'Adresa :', 'Phone'),
-          _buildInnerDetails('10:40', 'Str. Muresului, Nr. 10, Bl. O1, Ap. 33', '07847589406'),
+          _buildInnerDetails(
+              '10:40', 'Str. Muresului, Nr. 10, Bl. O1, Ap. 33', '07847589406'),
         ],
       ),
     );
@@ -127,11 +131,11 @@ class FoldingCellSimpleDemo extends StatelessWidget {
       padding: EdgeInsets.only(top: 10),
       child: Column(
         children: <Widget>[
-          SizedBox(height: 20),
+          SizedBox(height: 40),
           Container(
             child: Text('Delivery Details'),
           ),
-          SizedBox(height: 55),
+          SizedBox(height: 25),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             alignment: Alignment.center,
@@ -193,42 +197,45 @@ class FoldingCellSimpleDemo extends StatelessWidget {
       ],
     );
   }
-    Column _buildInnerDetails(String labelCode, String labelStatus, String labelPhone) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              labelCode,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
+
+  Column _buildInnerDetails(
+      String labelCode, String labelStatus, String labelPhone) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(height: 20),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            labelCode,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              labelStatus,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            labelStatus,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              labelPhone,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            labelPhone,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
             ),
           ),
-        ],
-      );
-    }
+        ),
+      ],
+    );
+  }
 }

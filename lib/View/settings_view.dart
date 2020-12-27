@@ -26,6 +26,7 @@ class _SettingsPageView extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFFffcd3c),
         centerTitle: true,
         title: Text('Settings'),
         leading: GestureDetector(
@@ -56,7 +57,7 @@ class _SettingsPageView extends State<SettingsPage> {
                         textScaleFactor: 1.3,
                       ),
                       textColor: Colors.white,
-                      color: Colors.indigoAccent,
+                      color: Color(0xFFffcd3c),
                       splashColor: Colors.white.withOpacity(0.5),
                       onPressed: _addOrderPage
                     )),
@@ -70,7 +71,7 @@ class _SettingsPageView extends State<SettingsPage> {
                         textScaleFactor: 1.3,
                       ),
                       textColor: Colors.white,
-                      color: Colors.indigoAccent,
+                      color: Color(0xFFffcd3c),
                       splashColor: Colors.white.withOpacity(0.5),
                       onPressed: () {},
                     )),
@@ -84,7 +85,7 @@ class _SettingsPageView extends State<SettingsPage> {
                         textScaleFactor: 1.3,
                       ),
                       textColor: Colors.white,
-                      color: Colors.indigoAccent,
+                      color: Color(0xFFffcd3c),
                       splashColor: Colors.white.withOpacity(0.5),
                       onPressed: () {},
                     )),
@@ -98,7 +99,7 @@ class _SettingsPageView extends State<SettingsPage> {
                         textScaleFactor: 1.3,
                       ),
                       textColor: Colors.white,
-                      color: Colors.indigoAccent,
+                      color: Color(0xFFffcd3c),
                       splashColor: Colors.white.withOpacity(0.5),
                       onPressed: _logInPage,
                     )),

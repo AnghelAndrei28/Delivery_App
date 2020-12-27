@@ -15,6 +15,7 @@ class _AddOrderView extends State<AddOrder> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xFFffcd3c),
           centerTitle: true,
           title: Text('Add Order'),
           leading: GestureDetector(
