@@ -24,7 +24,11 @@ class _SettingsPageView extends State<SettingsPage> {
     Navigator.push(context, MaterialPageRoute(builder: (_) => AddOrder()));
   }
 
-  final FirebaseAuth auth = FirebaseAuth.instance;
+   FirebaseAuth auth = FirebaseAuth.instance;
+
+  signOut() async {
+    await auth.signOut();
+  }
 
     inputData() {
     final User user = auth.currentUser;
@@ -111,9 +115,9 @@ class _SettingsPageView extends State<SettingsPage> {
                       textColor: Colors.white,
                       color: Color(0xFFffcd3c),
                       splashColor: Colors.white.withOpacity(0.5),
-                      onPressed: () async{
-                        await FirebaseAuth.instance.signOut();
-                        _logInPage();
+                      onPressed: () {
+                        signOut();
+                        Navigator.of(context).pop();
                       },
                     )),
                 SizedBox(height: 4),
