@@ -1,6 +1,8 @@
 import 'package:delivery_project/View/deliver_login_view.dart';
 import 'package:delivery_project/View/frame_customer.dart';
 import 'package:delivery_project/View/register_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,16 +23,8 @@ class _CustomerLogin extends State<CustomerLogin> {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerRegister()));
   }
 
-  final myControllerUser = TextEditingController();
-  final myControllerPass = TextEditingController();
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myControllerUser.dispose();
-    myControllerPass.dispose();
-    super.dispose();
-  }
+  final TextEditingController emailTextEditingController = TextEditingController();
+  final TextEditingController passwordTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,15 +67,15 @@ class _CustomerLogin extends State<CustomerLogin> {
                         TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Username'),
-                          controller: myControllerUser,
+                              labelText: 'Email'),
+                          controller: emailTextEditingController,
                         ),
                         SizedBox(height: 20),
                         TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Password'),
-                          controller: myControllerPass,
+                          controller: passwordTextEditingController,
                         ),
                         SizedBox(height: 30),
                         SizedBox(
@@ -92,49 +86,13 @@ class _CustomerLogin extends State<CustomerLogin> {
                                 color: Colors.indigoAccent,
                                 splashColor: Colors.white.withOpacity(0.5),
                                 onPressed: () {
-                                  return showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        // Retrieve the text the user has entered by using the
-                                        // TextEditingController.
-                                        content: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(myControllerUser.text +
-                                                '  ' +
-                                                myControllerPass.text),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 16.0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceEvenly,
-                                                children: [
-                                                  InkWell(
-                                                    child: Text(
-                                                      'Back',
-                                                      style: TextStyle(
-                                                          color:
-                                                              Theme.of(context)
-                                                                  .accentColor),
-                                                    ),
-                                                  ),
-                                                  InkWell(
-                                                    child: Text('Yes',
-                                                        style: TextStyle(
-                                                            color: Colors.red)),
-                                                    onTap: _frameCustomer,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  );
+                                  if(emailTextEditingController.text.contains("@curierat"))
+                                  {
+                                    displayToastMessage("You can't connect with deliver account", context);
+                                  }
+                                  else {
+                                    _loginUser();
+                                  }
                                 },
                                 child: Icon(Icons.arrow_forward),
                               ),
@@ -160,4 +118,19 @@ class _CustomerLogin extends State<CustomerLogin> {
       ]),
     );
   }
+
+  Future<void> _loginUser() async{
+    try{
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailTextEditingController.text,
+          password: passwordTextEditingController.text
+      );
+    } on FirebaseAuthException catch (e) {
+      print("Error: $e");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
 }
+

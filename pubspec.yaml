@@ -32,6 +32,14 @@ dependencies:
   date_format: ^1.0.9
   intl: ^0.16.1
   flutter_datetime_picker: ^1.4.0
+  fluttertoast: ^7.1.6
+  provider: 4.1.0
+  rflutter_alert: ^1.1.0
+
+  #DataBase Packages
+  firebase_core: ^0.5.3
+  firebase_database: ^4.4.0
+  firebase_auth: ^0.18.4+1
 
 dev_dependencies:
   flutter_test:

@@ -1,8 +1,10 @@
 import 'package:delivery_project/View/customer_login_view.dart';
 import 'package:delivery_project/View/frame_customer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
 import 'add_order_view.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -20,6 +22,14 @@ class _SettingsPageView extends State<SettingsPage> {
 
   void _addOrderPage() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => AddOrder()));
+  }
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+
+    inputData() {
+    final User user = auth.currentUser;
+    final uid = user.uid;
+    return uid;
   }
 
   @override
@@ -41,7 +51,7 @@ class _SettingsPageView extends State<SettingsPage> {
           children: [
             SizedBox(height: 80),
             Text(
-              'Bombonika Tha',
+              inputData(),
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
             SizedBox(height: 130),
@@ -101,7 +111,10 @@ class _SettingsPageView extends State<SettingsPage> {
                       textColor: Colors.white,
                       color: Color(0xFFffcd3c),
                       splashColor: Colors.white.withOpacity(0.5),
-                      onPressed: _logInPage,
+                      onPressed: () async{
+                        await FirebaseAuth.instance.signOut();
+                        _logInPage();
+                      },
                     )),
                 SizedBox(height: 4),
               ],
@@ -111,4 +124,8 @@ class _SettingsPageView extends State<SettingsPage> {
       ),
     );
   }
+
+
+
+
 }
