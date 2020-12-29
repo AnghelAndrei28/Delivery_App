@@ -1,5 +1,7 @@
 import 'package:delivery_project/View/customer_login_view.dart';
 import 'package:delivery_project/View/frame_deliver_view.dart';
+import 'package:delivery_project/View/register_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,16 +18,9 @@ class _DeliverLogin extends State<DeliverLogin> {
     Navigator.push(context, MaterialPageRoute(builder: (_) => FrameDeliver()));
   }
 
-  final myControllerUser = TextEditingController();
-  final myControllerPass = TextEditingController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
 
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is disposed.
-    myControllerUser.dispose();
-    myControllerPass.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,15 +52,15 @@ class _DeliverLogin extends State<DeliverLogin> {
                         TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Username'),
-                          controller: myControllerUser,
+                              labelText: 'Email'),
+                          controller: emailTextEditingController,
                         ),
                         SizedBox(height: 20),
                         TextField(
                           decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Password'),
-                          controller: myControllerPass,
+                          controller: passwordTextEditingController,
                         ),
                         SizedBox(height: 30),
                         SizedBox(
@@ -75,7 +70,17 @@ class _DeliverLogin extends State<DeliverLogin> {
                             textColor: Colors.white,
                             color: Colors.indigoAccent,
                             splashColor: Colors.white.withOpacity(0.5),
-                            onPressed: _deliverPage,
+                            onPressed: () {
+                              if (!emailTextEditingController.text.contains(
+                                  "@curierat")) {
+                                displayToastMessage(
+                                    "Inavild Email",
+                                    context);
+                              }
+                              else {
+                                _loginDeliver();
+                              };
+                            },
                             child: Icon(Icons.arrow_forward),
                           ),
                         ),
@@ -100,4 +105,19 @@ class _DeliverLogin extends State<DeliverLogin> {
       ]),
     );
   }
+
+  Future<void> _loginDeliver() async{
+    try{
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailTextEditingController.text,
+          password: passwordTextEditingController.text
+      );
+      _deliverPage();
+    } on FirebaseAuthException catch (e) {
+      print("Error: $e");
+    } catch (e) {
+      print("Error: $e");
+    }
+  }
+
 }

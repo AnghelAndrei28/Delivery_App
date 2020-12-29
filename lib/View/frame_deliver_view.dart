@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:folding_cell/folding_cell.dart';
@@ -9,6 +10,14 @@ class FrameDeliver extends StatefulWidget {
 }
 
 class _FrameDeliverView extends State<FrameDeliver> {
+
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  signOut() async {
+    await auth.signOut();
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +25,10 @@ class _FrameDeliverView extends State<FrameDeliver> {
           backgroundColor: Color(0xFFffcd3c),
           centerTitle: true,
           title: Text('Orders'),
+          leading: GestureDetector(
+            onTap: signOut,
+            child: Icon(Icons.exit_to_app),
+          ),
         ),
         body: CustomScrollView(
           slivers: <Widget>[

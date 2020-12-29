@@ -3,7 +3,6 @@ import 'package:delivery_project/View/frame_customer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'add_order_view.dart';
 
@@ -30,10 +29,20 @@ class _SettingsPageView extends State<SettingsPage> {
     await auth.signOut();
   }
 
-    inputData() {
+  getUsername(){
     final User user = auth.currentUser;
     final uid = user.uid;
-    return uid;
+
+    DatabaseReference  db = FirebaseDatabase.instance.reference().child("users");
+    db.once().then((DataSnapshot snapshot){
+      Map<dynamic, dynamic> values = snapshot.value;
+      values.forEach((key,values) {
+        if(key == uid) {
+          print (values["username"]);
+          return values["username"];
+        }
+      });
+    });
   }
 
   @override
@@ -55,7 +64,7 @@ class _SettingsPageView extends State<SettingsPage> {
           children: [
             SizedBox(height: 80),
             Text(
-              inputData(),
+              'Ana',
               style: TextStyle(fontSize: 20, color: Colors.white),
             ),
             SizedBox(height: 130),

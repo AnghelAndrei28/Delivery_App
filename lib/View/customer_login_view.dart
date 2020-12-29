@@ -2,7 +2,6 @@ import 'package:delivery_project/View/deliver_login_view.dart';
 import 'package:delivery_project/View/frame_customer.dart';
 import 'package:delivery_project/View/register_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -15,16 +14,12 @@ class _CustomerLogin extends State<CustomerLogin> {
     Navigator.push(context, MaterialPageRoute(builder: (_) => DeliverLogin()));
   }
 
-  void _frameCustomer() {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => FrameCustomer()));
-  }
-
   void _registerPage() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerRegister()));
   }
 
-  final TextEditingController emailTextEditingController = TextEditingController();
-  final TextEditingController passwordTextEditingController = TextEditingController();
+  TextEditingController emailTextEditingController = TextEditingController();
+  TextEditingController passwordTextEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
