@@ -184,6 +184,13 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
   }
 
   Widget _buildInnerWidget(Package package) {
+    bool _status;
+
+    if(package.status == "Activ")
+      _status = true;
+    else
+      _status = false;
+
     Widget innerDetails = Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -215,9 +222,9 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
               child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              FlatButton(
+              RaisedButton(
                 child: Text("Finish"),
-                onPressed: () {},
+                onPressed: _status ? () {} : null,
                 textColor: Colors.white,
                 color: Colors.indigoAccent,
                 splashColor: Colors.white.withOpacity(0.5),
@@ -258,6 +265,7 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
           child: Text(
             labelStatus,
             style: TextStyle(
+              color: getColor(labelStatus),
               fontSize: 12,
               fontWeight: FontWeight.w400,
             ),
@@ -358,5 +366,11 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
         ),
       ],
     );
+  }
+
+  getColor(String labelStatus) {
+    if(labelStatus == "Activ") return Colors.green;
+    if(labelStatus == "Delivered") return Colors.red;
+    return Colors.black;
   }
 }
