@@ -62,6 +62,7 @@ class LandingPage extends StatelessWidget {
                     }
                   }
                   return Scaffold(
+                    backgroundColor: Color(0xFFffcd3c),
                     body: Center(
                       child: Text("Checking ..."),
                     ),

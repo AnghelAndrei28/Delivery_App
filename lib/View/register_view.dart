@@ -15,7 +15,8 @@ class _CustomerRegister extends State<CustomerRegister> {
   TextEditingController usernameTextEditingController = TextEditingController();
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
-  TextEditingController passwordConfirmationTextEditingController = TextEditingController();
+  TextEditingController passwordConfirmationTextEditingController =
+      TextEditingController();
 
   void _customerLoginPage() {
     Navigator.push(context, MaterialPageRoute(builder: (_) => CustomerLogin()));
@@ -93,26 +94,31 @@ class _CustomerRegister extends State<CustomerRegister> {
                           width: 160,
                           child: FlatButton(
                             onPressed: () {
-                              if(usernameTextEditingController.text.length < 6)
-                                {
-                                    displayToastMessage("Name must be at least 6 characters", context);
-                                }
-                              else if(!emailTextEditingController.text.contains("@curierat"))
-                                {
-                                    displayToastMessage("Invalid Email", context);
-                                }
-                              else if(passwordTextEditingController.text.length < 6)
-                                {
-                                    displayToastMessage("Password must be at least 6 characters", context);
-                                }
-                              else if(passwordTextEditingController.text != passwordConfirmationTextEditingController.text)
-                                {
-                                    displayToastMessage("Password confirmation doesn't match Password", context);
-                                }
-                              else
-                                {
+                              if (usernameTextEditingController.text.length <
+                                  6) {
+                                displayToastMessage(
+                                    "Name must be at least 6 characters",
+                                    context);
+                              } else if (emailTextEditingController.text
+                                      .contains("@curierat") ||
+                                  !emailTextEditingController.text
+                                      .contains("@")) {
+                                displayToastMessage("Invalid Email", context);
+                              } else if (passwordTextEditingController
+                                      .text.length <
+                                  6) {
+                                displayToastMessage(
+                                    "Password must be at least 6 characters",
+                                    context);
+                              } else if (passwordTextEditingController.text !=
+                                  passwordConfirmationTextEditingController
+                                      .text) {
+                                displayToastMessage(
+                                    "Password confirmation doesn't match Password",
+                                    context);
+                              } else {
                                 registerNewUser(context);
-                                }
+                              }
                             },
                             child: Icon(Icons.arrow_forward),
                             textColor: Colors.white,
@@ -137,33 +143,37 @@ class _CustomerRegister extends State<CustomerRegister> {
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  registerNewUser(BuildContext context) async
-  {
-    final User firebaseUser = (await _firebaseAuth.createUserWithEmailAndPassword(
-        email: emailTextEditingController.text,
-        password: passwordTextEditingController.text
-    ).catchError((errMsg){
+  registerNewUser(BuildContext context) async {
+    final User firebaseUser = (await _firebaseAuth
+            .createUserWithEmailAndPassword(
+                email: emailTextEditingController.text,
+                password: passwordTextEditingController.text)
+            .catchError((errMsg) {
       displayToastMessage("Error: " + errMsg, context);
-    })).user;
+    }))
+        .user;
 
-    if(firebaseUser != null)
-    {
-        Map userDataMap = {
-            "username": usernameTextEditingController.text.trim(),
-            "email": emailTextEditingController.text.trim(),
-        };
+    if (firebaseUser != null) {
+      Map userDataMap = {
+        "username": usernameTextEditingController.text.trim(),
+        "email": emailTextEditingController.text.trim(),
+        "numarcomenzi": 0,
+        "comanda1": "",
+        "comanda2": "",
+        "comanda3": "",
+        "comanda4": "",
+        "comanda5": "",
+      };
 
-        usersRef.child(firebaseUser.uid).set(userDataMap);
-        displayToastMessage("Account has been created", context);
+      usersRef.child(firebaseUser.uid).set(userDataMap);
+      displayToastMessage("Account has been created", context);
+      Navigator.of(context).pop();
+    } else {
+      displayToastMessage("New user has not been created.", context);
     }
-    else
-      {
-        displayToastMessage("New user has not been created.", context);
-      }
   }
 }
 
-displayToastMessage(String message, BuildContext context)
-{
+displayToastMessage(String message, BuildContext context) {
   Fluttertoast.showToast(msg: message);
 }

@@ -1,3 +1,7 @@
+import 'package:delivery_project/Model/package_model.dart';
+import 'package:delivery_project/main.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:folding_cell/folding_cell.dart';
@@ -24,7 +28,7 @@ class _FrameDeliverView extends State<FrameDeliver> {
               delegate:
                   SliverChildBuilderDelegate((BuildContext context, int index) {
                 return Material(
-                  child: _FoldingCellSimpleDemo(),
+                  child: _FoldingCellSimpleDemo(index),
                 );
               }, childCount: 4),
             ),
@@ -34,13 +38,50 @@ class _FrameDeliverView extends State<FrameDeliver> {
 }
 
 class _FoldingCellSimpleDemo extends StatefulWidget {
+  final int index;
+
+  _FoldingCellSimpleDemo(this.index);
+
   @override
-  __FoldingCellSimpleDemoState createState() => __FoldingCellSimpleDemoState();
+  __FoldingCellSimpleDemoState createState() => __FoldingCellSimpleDemoState(index);
 }
 
 class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
-  double _height;
-  double _width;
+
+  final GlobalKey <FormState> formkey = GlobalKey<FormState>();
+  int index;
+
+  __FoldingCellSimpleDemoState(this.index);
+
+  Package package;
+
+  List <Package> packageList;
+
+  @override
+  void initState(){
+    super.initState();
+    ordersRef.onChildAdded.listen(_onEntryAdded);
+    packageList = [];
+    package = Package('', '', 0, '', '', '');
+    ordersRef.onChildChanged.listen(_onEntryChanged);
+  }
+
+  void _onEntryAdded(Event event) async{
+    setState(() {
+      Package package = Package('', '', 0, '', '', '');
+      packageList.add(package);
+      packageList[packageList.indexOf(package)] = Package.fromSnapshot(event.snapshot);
+    });
+  }
+
+  void _onEntryChanged(Event event) async{
+    var oldEntry = packageList.singleWhere((entry) {
+      return entry.key == event.snapshot.key;
+    });
+    setState(() {
+      packageList[packageList.indexOf(oldEntry)] = Package.fromSnapshot(event.snapshot);
+    });
+  }
 
   String _setTime, _setDate;
 
@@ -74,16 +115,14 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
 
   @override
   Widget build(BuildContext context) {
-    _height = MediaQuery.of(context).size.height;
-    _width = MediaQuery.of(context).size.width;
     dateTime = DateFormat.yMd().format(DateTime.now());
     return Container(
       color: Color(0xFF2e282a),
       alignment: Alignment.topCenter,
       child: SimpleFoldingCell.create(
         key: _foldingCellKey,
-        frontWidget: _buildFrontWidget(),
-        innerWidget: _buildInnerWidget(),
+        frontWidget: _buildFrontWidget(packageList.elementAt(index)),
+        innerWidget: _buildInnerWidget(packageList.elementAt(index)),
         cellSize: Size(MediaQuery.of(context).size.width, 140),
         padding: EdgeInsets.all(15),
         animationDuration: Duration(milliseconds: 300),
@@ -94,7 +133,7 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
     );
   }
 
-  Widget _buildFrontWidget() {
+  Widget _buildFrontWidget(Package package) {
     Widget frontDetails = Container(
       child: Column(
         children: [
@@ -103,7 +142,7 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _buildFrontDetails('Code :', 'Status :'),
-              _buildFrontDetails('RB35536346378', 'Active'),
+              _buildFrontDetails(package.code, package.status),
             ],
           ),
         ],
@@ -144,14 +183,14 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
         ));
   }
 
-  Widget _buildInnerWidget() {
+  Widget _buildInnerWidget(Package package) {
     Widget innerDetails = Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _buildInnerDetails('Hour :', 'Adresa :', 'Phone :'),
           _buildInnerClockDetails(
-              'Str. Muresului, Nr. 10, Bl. O1, Ap. 33', '07847589406'),
+              package.adress, package.phone),
         ],
       ),
     );
