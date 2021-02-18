@@ -1,7 +1,6 @@
 import 'package:delivery_project/Model/package_model.dart';
 import 'package:delivery_project/main.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:folding_cell/folding_cell.dart';
@@ -83,7 +82,7 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
     });
   }
 
-  String _setTime, _setDate;
+  String _setTime;
 
   String _hour, _minute, _time;
 
@@ -224,7 +223,7 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
             children: [
               RaisedButton(
                 child: Text("Finish"),
-                onPressed: _status ? () {} : null,
+                onPressed: _status ? () {_updateStatus(packageList[index]);} : null,
                 textColor: Colors.white,
                 color: Colors.indigoAccent,
                 splashColor: Colors.white.withOpacity(0.5),
@@ -372,5 +371,13 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
     if(labelStatus == "Activ") return Colors.green;
     if(labelStatus == "Delivered") return Colors.red;
     return Colors.black;
+  }
+
+  _updateStatus(Package package){
+    package.status = "Delivered";
+    if(package != null){
+      ordersRef.reference().child(package.key).set(package.toJson());
+    }
+
   }
 }

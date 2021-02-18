@@ -13,10 +13,21 @@ class Package {
 
     Package.fromSnapshot(DataSnapshot snapshot) :
           key = snapshot.key,
-          code = snapshot.value['Code'],
-          driver_Id = snapshot.value['Deliver_Id'],
-          adress = snapshot.value['Adress'],
-          hour = snapshot.value['Hour'],
-          phone = snapshot.value['Phone'],
-          status = snapshot.value['Status'];
+          code = snapshot.value['code'],
+          driver_Id = snapshot.value['driver_Id'],
+          adress = snapshot.value['adress'],
+          hour = snapshot.value['hour'],
+          phone = snapshot.value['phone'],
+          status = snapshot.value['status'];
+
+    toJson(){
+        return {
+            "code": code,
+            "driver_Id": driver_Id,
+            "adress": adress,
+            "hour": hour,
+            "phone": phone,
+            "status": status,
+        };
+    }
 }
