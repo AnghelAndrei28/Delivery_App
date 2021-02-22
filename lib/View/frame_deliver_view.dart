@@ -92,7 +92,7 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
 
   TextEditingController _timeController = TextEditingController();
 
-  Future<Null> _selectTime(BuildContext context) async {
+  Future<Null> _selectTime(BuildContext context, Package package) async {
     final TimeOfDay picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
@@ -105,9 +105,11 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
         _time = _hour + ' : ' + _minute;
         _timeController.text = _time;
         _timeController.text = formatDate(
-            DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
+            DateTime(2021, 03, 24, selectedTime.hour, selectedTime.minute),
             [hh, ':', nn, " ", am]).toString();
+        package.hour = _hour + ':' + _minute;
       });
+    _updateHour(package);
   }
 
   final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
@@ -323,7 +325,7 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
       children: [
         InkWell(
           onTap: () {
-            _selectTime(context);
+            _selectTime(context, packageList[index]);
           },
           child: Container(
             margin: EdgeInsets.only(top: 30),
@@ -373,11 +375,17 @@ class __FoldingCellSimpleDemoState extends State<_FoldingCellSimpleDemo> {
     return Colors.black;
   }
 
-  _updateStatus(Package package){
+  _updateStatus(Package package) {
     package.status = "Delivered";
-    if(package != null){
+    if (package != null) {
       ordersRef.reference().child(package.key).set(package.toJson());
+    }
+  }
+    _updateHour(Package package){
+      if(package != null){
+        ordersRef.reference().child(package.key).set(package.toJson());
+      }
     }
 
   }
-}
+
